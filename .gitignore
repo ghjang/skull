@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+test/build
+
+test/.vscode/.cmaketools.json
