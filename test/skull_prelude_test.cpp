@@ -129,4 +129,25 @@ TEST_CASE("map", "[prelude]")
                 >
         >
     );
+
+    static_assert(
+        std::is_same_v<
+                TL<int, double, std::string>,
+                map_t<
+                    quote<std::remove_const>,
+                    TL<int const, double const, std::string const>
+                >
+        >
+    );
+
+    void f();   // NOTE: function forward declaration only for this test case.
+    static_assert(
+        std::is_same_v<
+                TL<int, std::string, double *, void (*) ()>,
+                map_t<
+                    quote<std::decay>,
+                    TL<int const, std::string const &, double [8], decltype(f)>
+                >
+        >
+    );
 }
