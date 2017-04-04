@@ -24,6 +24,7 @@ set(CMAKE_CXX_COMPILER  "/Users/gilhojang/clang/clang+llvm-4.0.0-x86_64-apple-da
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
 set(SOURCE_FILES
+        skull_base_test.cpp
         skull_prelude_test.cpp
         main.cpp)
 
