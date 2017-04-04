@@ -1,7 +1,10 @@
-#ifndef SKULL_INCLUDE_ALL_H
-#define SKULL_INCLUDE_ALL_H
+#ifndef SKULL_PRELUDE_H
+#define SKULL_PRELUDE_H
 
 #include "base/identity.h"
-#include "prelude/id.h"
+#include "base/type_list.h"
 
-#endif // SKULL_INCLUDE_ALL_H
+#include "prelude/id.h"
+#include "prelude/length.h"
+
+#endif // SKULL_PRELUDE_H
