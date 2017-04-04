@@ -12,8 +12,8 @@ namespace skull::prelude
     template <typename TypeList>
     struct length;
 
-    template <template <typename...> class Container, typename... xs>
-    struct length<Container<xs...>>
+    template <template <typename...> class TypeList, typename... xs>
+    struct length<TypeList<xs...>>
             : std::integral_constant<std::size_t, sizeof...(xs)>
     { };
 
