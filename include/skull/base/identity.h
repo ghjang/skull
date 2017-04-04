@@ -10,7 +10,6 @@ namespace skull::base
         using type = T;
     };
 
-
     template <typename T>
     using type_is = identity<T>;
 } // namespace skull::base
