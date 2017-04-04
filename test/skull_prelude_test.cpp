@@ -117,3 +117,16 @@ TEST_CASE("tail", "[prelude]")
     );
     */
 }
+
+TEST_CASE("map", "[prelude]")
+{
+    static_assert(
+        std::is_same_v<
+                TL<int const, double const, std::string const>,
+                map_t<
+                    quote<std::add_const>,
+                    TL<int, double, std::string>
+                >
+        >
+    );
+}
