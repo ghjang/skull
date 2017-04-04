@@ -15,8 +15,8 @@ namespace skull::base
     struct invoke : f::template lambda<xs...>
     { };
 
-    template <typename f, typename TypeList>
-    using invoke_t = typename invoke<f, TypeList>::type;
+    template <typename f, typename... xs>
+    using invoke_t = typename invoke<f, xs...>::type;
 } // namespace skull::base
 
 
