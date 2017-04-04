@@ -7,5 +7,6 @@
 #include "prelude/id.h"
 #include "prelude/length.h"
 #include "prelude/head.h"
+#include "prelude/tail.h"
 
 #endif // SKULL_PRELUDE_H
