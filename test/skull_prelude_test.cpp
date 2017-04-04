@@ -151,3 +151,7 @@ TEST_CASE("map", "[prelude]")
         >
     );
 }
+
+TEST_CASE("foldl", "[prelude]")
+{
+}
