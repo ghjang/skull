@@ -13,8 +13,7 @@ namespace skull::prelude
     using skull::base::tag::no_elem_error_tag;
 
     // NOTE: This will force the compiler to show 'no_elem_error_tag<...>' text
-    //          in the error messages when it's not a 'type_list' or it has no
-    //          elements at all.
+    //          in the error messages when it's not a 'type_list'.
     template <typename TypeList>
     struct length : no_elem_error_tag<TypeList>
     {
