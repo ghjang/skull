@@ -6,6 +6,7 @@
 #include "base/type_list.h"
 #include "base/quote.h"
 #include "base/invoke.h"
+#include "base/at.h"            // xs !! n
 
 #include "prelude/id.h"
 #include "prelude/length.h"
