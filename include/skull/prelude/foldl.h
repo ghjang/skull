@@ -2,7 +2,10 @@
 #define SKULL_PRELUDE_FOLDL_H
 
 
+#include "../base/identity.h"
 #include "../base/type_list.h"
+#include "../base/quote.h"
+#include "../base/invoke.h"
 
 
 namespace skull::prelude
@@ -29,6 +32,9 @@ namespace skull::prelude
     struct foldl<f, init, TL<x, xs...>>
             : foldl<f, invoke_t<f, init, x>, TL<xs...>>
     { };
+
+    template <typename f, typename init, typename TypeList>
+    using foldl_t = typename foldl<f, init, TypeList>::type;
 } // namespace skull::prelude
 
 

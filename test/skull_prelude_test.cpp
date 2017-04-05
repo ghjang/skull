@@ -155,3 +155,18 @@ TEST_CASE("map", "[prelude]")
 TEST_CASE("foldl", "[prelude]")
 {
 }
+
+TEST_CASE("concat", "[prelude]")
+{
+    static_assert(std::is_same_v<TL<>, concat_t<TL<>>>);
+    static_assert(std::is_same_v<TL<>, concat_t<TL<TL<>>>>);
+    static_assert(std::is_same_v<TL<>, concat_t<TL<TL<>, TL<>>>>);
+    static_assert(std::is_same_v<TL<>, concat_t<TL<TL<>, TL<>, TL<>>>>);
+
+    static_assert(
+        std::is_same_v<
+                TL<int, long int, float, double, std::string>,
+                concat_t<TL<TL<int, long int>, TL<float, double>, TL<std::string>>>
+        >
+    );
+}

@@ -13,6 +13,7 @@
 #include "prelude/tail.h"
 #include "prelude/map.h"
 #include "prelude/foldl.h"
+#include "prelude/concat.h"
 
 
 #endif // SKULL_PRELUDE_H
