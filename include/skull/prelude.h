@@ -7,6 +7,7 @@
 #include "base/quote.h"
 #include "base/invoke.h"
 #include "base/at.h"            // xs !! n
+#include "base/append.h"        // [xs] ++ [new_element]
 
 #include "prelude/id.h"
 #include "prelude/length.h"
