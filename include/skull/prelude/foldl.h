@@ -18,7 +18,7 @@ namespace skull::prelude
      * assumed that f is op:
      *      (...(init op t0) op t1) op t2)... op tn)
      *
-     * @tparam f metafunction class
+     * @tparam f (binary) metafunction class
      */
     template <typename f, typename init, typename TypeList>
     struct foldl
