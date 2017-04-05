@@ -174,3 +174,15 @@ TEST_CASE("concat", "[prelude]")
 TEST_CASE("foldr", "[prelude]")
 {
 }
+
+TEST_CASE("reverse", "[prelude]")
+{
+    static_assert(std::is_same_v<TL<>, reverse_t<TL<>>>);
+
+    static_assert(
+        std::is_same_v<
+                TL<std::string, double, int>,
+                reverse_t<TL<int, double, std::string>>
+        >
+    );
+}

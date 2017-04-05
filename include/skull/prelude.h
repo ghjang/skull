@@ -17,6 +17,7 @@
 #include "prelude/map.h"
 #include "prelude/foldl.h"
 #include "prelude/concat.h"
+#include "prelude/reverse.h"
 #include "prelude/foldr.h"
 
 
