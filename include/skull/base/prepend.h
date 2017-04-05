@@ -9,8 +9,7 @@
 namespace skull::base
 {
     template <typename T, typename TypeList>
-    struct prepend
-    { };
+    struct prepend;
 
     template <typename T, typename... xs>
     struct prepend<T, TL<xs...>> : type_is<TL<T, xs...>>

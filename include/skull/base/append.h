@@ -9,8 +9,7 @@
 namespace skull::base
 {
     template <typename TypeList, typename T>
-    struct append
-    { };
+    struct append;
 
     template <typename... xs, typename T>
     struct append<TL<xs...>, T> : type_is<TL<xs..., T>>

@@ -10,8 +10,7 @@
 namespace skull::base
 {
     template <typename Index, typename TypeList>
-    struct at
-    { };
+    struct at;
     
     template <std::size_t i, typename... xs>
     struct at<std::integral_constant<std::size_t, i>, TL<xs...>>
