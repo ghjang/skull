@@ -10,6 +10,9 @@ namespace skull::prelude
     using skull::base::TL;
     using skull::base::quote;
 
+    /**
+     * @tparam xss a type list of type lists
+     */
     template <typename xss>
     struct concat
     { };
@@ -18,8 +21,11 @@ namespace skull::prelude
     struct concat<TL<xss...>>
     {
         /**
-        * concatenation binary operation
-        */
+         * concatenation binary operation
+         *
+         * @tparam xs left-side type list
+         * @tparam ys right-side type list
+         */
         template <typename xs, typename ys>
         struct binary_concat;
 
