@@ -170,3 +170,7 @@ TEST_CASE("concat", "[prelude]")
         >
     );
 }
+
+TEST_CASE("foldr", "[prelude]")
+{
+}

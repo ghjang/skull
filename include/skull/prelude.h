@@ -17,6 +17,7 @@
 #include "prelude/map.h"
 #include "prelude/foldl.h"
 #include "prelude/concat.h"
+#include "prelude/foldr.h"
 
 
 #endif // SKULL_PRELUDE_H
