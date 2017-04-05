@@ -8,6 +8,7 @@
 #include "base/invoke.h"
 #include "base/at.h"            // xs !! n
 #include "base/append.h"        // [xs] ++ [new_element]
+#include "base/prepend.h"       // new_element : [xs]
 
 #include "prelude/id.h"
 #include "prelude/length.h"

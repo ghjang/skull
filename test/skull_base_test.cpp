@@ -5,6 +5,7 @@
 
 #include "skull/base/at.h"
 #include "skull/base/append.h"
+#include "skull/base/prepend.h"
 #include "skull/base/is_same_template.h"
 using namespace skull::base;
 
@@ -30,6 +31,16 @@ TEST_CASE("append", "[base]")
         std::is_same_v<
                 TL<int, float, double, std::string>,
                 append_t<TL<int, float, double>, std::string>
+        >
+    );
+}
+
+TEST_CASE("prepend", "[base]")
+{
+    static_assert(
+        std::is_same_v<
+                TL<std::string, int, float, double>,
+                prepend_t<std::string, TL<int, float, double>>
         >
     );
 }
