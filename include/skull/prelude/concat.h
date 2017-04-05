@@ -23,8 +23,8 @@ namespace skull::prelude
         /**
          * concatenation binary operation
          *
-         * @tparam xs left-side type list
-         * @tparam ys right-side type list
+         * @tparam xs left-side type list. It should be a type_list instance.
+         * @tparam ys right-side type list. It should be a type_list instance.
          */
         template <typename xs, typename ys>
         struct binary_concat;
