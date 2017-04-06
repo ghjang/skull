@@ -10,4 +10,11 @@
 #include "app/unique.h"
 
 
+namespace skull::app
+{
+    using skull::base::rename_template;
+    using skull::base::rename_template_t;
+} // namespace skull::app
+
+
 #endif // SKULL_APP_H
