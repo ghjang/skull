@@ -12,7 +12,7 @@ namespace skull::prelude
 {
     using skull::base::type_is;
     using skull::base::TL;
-    using skull::base::invoke_t;
+    using skull::base::invoke;
 
     /**
      * assumed that f is op:
