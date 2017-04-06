@@ -15,6 +15,10 @@ namespace skull::app
     using skull::base::bind_first;
     using skull::prelude::sum;
 
+    /**
+     * @tparam UnaryPredicate a unary predicate metafunction class
+     * @tparam TypeList source type list
+     */
     template <typename UnaryPredicate, typename TypeList>
     struct count_if;
 
