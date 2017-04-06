@@ -6,6 +6,7 @@
 #include "base/type_list.h"
 #include "base/quote.h"
 #include "base/invoke.h"
+#include "base/rename_template.h"
 #include "base/bind.h"
 #include "base/compose.h"
 
