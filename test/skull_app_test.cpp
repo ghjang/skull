@@ -90,3 +90,17 @@ TEST_CASE("remove", "[app]")
         >
     );
 }
+
+TEST_CASE("unique", "[app]")
+{
+    static_assert(std::is_same_v<TL<>, unique_t<TL<>>>);
+    static_assert(std::is_same_v<TL<int>, unique_t<TL<int>>>);
+    static_assert(std::is_same_v<TL<int>, unique_t<TL<int, int>>>);
+
+    static_assert(
+        std::is_same_v<
+                TL<int, double, std::string>,
+                unique_t<TL<int, double, int, std::string, int>>
+        >
+    );
+}
