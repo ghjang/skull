@@ -70,3 +70,23 @@ TEST_CASE("count", "[app]")
         > == 2
     );
 }
+
+TEST_CASE("remove_if", "[app]")
+{
+    static_assert(
+        std::is_same_v<
+            TL<double, std::string>,
+            remove_if_t<quote<std::is_integral>, TL<int, double, long, std::string>>
+        >
+    );
+}
+
+TEST_CASE("remove", "[app]")
+{
+    static_assert(
+        std::is_same_v<
+            TL<double, long, std::string>,
+            remove_t<int, TL<int, double, long, std::string, int>>
+        >
+    );
+}
