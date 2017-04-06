@@ -182,6 +182,8 @@ TEST_CASE("reverse", "[prelude]")
 
 TEST_CASE("sum", "[prelude]")
 {
+    static_assert(sum_v<TL<>> == 0);
+    
     static_assert(
         sum_v<
             TL<
