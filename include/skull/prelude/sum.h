@@ -21,7 +21,10 @@ namespace skull::prelude
 
     template <typename T, T... i>
     struct sum<TL<std::integral_constant<T, i>...>>
-            : std::integral_constant<T, (... + i)>
+            : std::integral_constant<
+                    std::common_type_t<int, T>,
+                    (... + i)
+              >
     { };
 
     template <typename TypeList>

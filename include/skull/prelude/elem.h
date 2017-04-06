@@ -25,12 +25,12 @@ namespace skull::prelude
     template <typename T, typename x, typename... xs>
     struct elem<T, TL<x, xs...>>
             : std::bool_constant<
-                    sum_v<
-                        map_t<
-                            bind_last<quote<std::is_same>, T>,
-                            TL<x, xs...>
+                    0 < sum_v<  // if the sum is greater than 0,
+                            map_t<
+                                bind_last<quote<std::is_same>, T>,
+                                TL<x, xs...>
+                            >
                         >
-                    >
               >
     { };
 
