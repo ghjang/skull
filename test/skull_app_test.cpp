@@ -34,3 +34,13 @@ TEST_CASE("replace", "[app]")
         >
     );
 }
+
+TEST_CASE("count_if", "[app]")
+{
+    static_assert(
+        count_if_v<
+            TL<int, double, long int, std::string>,
+            quote<std::is_integral>
+        > == 2
+    );
+}
