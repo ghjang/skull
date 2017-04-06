@@ -16,13 +16,14 @@
 #include "prelude/length.h"
 #include "prelude/head.h"
 #include "prelude/tail.h"
-#include "prelude/map.h"
-#include "prelude/foldl.h"
-#include "prelude/foldr.h"
+#include "prelude/map.h"        // map higher-order metafunction
+#include "prelude/foldl.h"      // foldl higher-order metafunction
+#include "prelude/foldr.h"      // foldr higher-order metafunction
 #include "prelude/concat.h"
 #include "prelude/reverse.h"
 #include "prelude/sum.h"
 #include "prelude/elem.h"
+#include "prelude/filter.h"     // filter higher-order metafunction
 
 
 #endif // SKULL_PRELUDE_H

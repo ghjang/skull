@@ -203,3 +203,18 @@ TEST_CASE("elem", "[prelude]")
     static_assert(elem_v<int, TL<double, int, std::string, int>>);
     static_assert(!elem_v<int, TL<double, long int, std::string>>);
 }
+
+TEST_CASE("filter", "[prelude]")
+{
+    static_assert(std::is_same_v<TL<>, filter_t<quote<std::is_integral>, TL<>>>);
+
+    static_assert(
+        std::is_same_v<
+            TL<int, long, short, unsigned>,
+            filter_t<
+                quote<std::is_integral>,
+                TL<int, float, long, double, std::string, short, unsigned>
+            >
+        >
+    );
+}
