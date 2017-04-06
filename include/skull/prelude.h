@@ -21,6 +21,8 @@
 #include "prelude/foldr.h"
 #include "prelude/concat.h"
 #include "prelude/reverse.h"
+#include "prelude/sum.h"
+#include "prelude/elem.h"
 
 
 #endif // SKULL_PRELUDE_H

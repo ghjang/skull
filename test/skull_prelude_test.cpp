@@ -192,3 +192,11 @@ TEST_CASE("sum", "[prelude]")
         > == 6
     );
 }
+
+TEST_CASE("elem", "[prelude]")
+{
+    static_assert(!elem_v<int, TL<>>);
+    static_assert(elem_v<int, TL<int>>);
+    static_assert(elem_v<int, TL<double, int, std::string>>);
+    static_assert(!elem_v<int, TL<double, long int, std::string>>);
+}
