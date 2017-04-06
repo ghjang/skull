@@ -127,8 +127,8 @@ TEST_CASE("last", "[prelude]")
 TEST_CASE("init", "[prelude]")
 {
     static_assert(std::is_same_v<TL<>, init_t<TL<int>>>);
-    //static_assert(std::is_same_v<TL<int>, init_t<TL<int, float>>>);
-    //static_assert(std::is_same_v<TL<int, float>, init_t<TL<int, float, double>>>);
+    static_assert(std::is_same_v<TL<int>, init_t<TL<int, float>>>);
+    static_assert(std::is_same_v<TL<int, float>, init_t<TL<int, float, double>>>);
 }
 
 TEST_CASE("map", "[prelude]")
