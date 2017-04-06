@@ -26,6 +26,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 set(SOURCE_FILES
         skull_base_test.cpp
         skull_prelude_test.cpp
+        skull_app_test.cpp
         main.cpp)
 
 add_executable(skull_test ${SOURCE_FILES})
