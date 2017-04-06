@@ -152,10 +152,6 @@ TEST_CASE("map", "[prelude]")
     );
 }
 
-TEST_CASE("foldl", "[prelude]")
-{
-}
-
 TEST_CASE("concat", "[prelude]")
 {
     static_assert(std::is_same_v<TL<>, concat_t<TL<>>>);
@@ -169,10 +165,6 @@ TEST_CASE("concat", "[prelude]")
                 concat_t<TL<TL<int, long int>, TL<float, double>, TL<std::string>>>
         >
     );
-}
-
-TEST_CASE("foldr", "[prelude]")
-{
 }
 
 TEST_CASE("reverse", "[prelude]")
