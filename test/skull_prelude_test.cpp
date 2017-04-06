@@ -118,6 +118,12 @@ TEST_CASE("tail", "[prelude]")
     */
 }
 
+TEST_CASE("last", "[prelude]")
+{
+    static_assert(std::is_same_v<int, last_t<TL<int>>>);
+    static_assert(std::is_same_v<int, last_t<TL<float, double, int>>>);
+}
+
 TEST_CASE("map", "[prelude]")
 {
     static_assert(
