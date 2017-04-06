@@ -66,6 +66,28 @@ TEST_CASE("prepend", "[base]")
                 prepend_t<std::string, TL<int, float, double>>
         >
     );
+
+    static_assert(
+        std::is_same_v<
+                TL<int, float, double>,
+                prepend_if_t<
+                    quote<std::is_integral>,
+                    std::string,
+                    TL<int, float, double>
+                >
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                TL<long, int, float, double>,
+                prepend_if_t<
+                    quote<std::is_integral>,
+                    long,
+                    TL<int, float, double>
+                >
+        >
+    );
 }
 
 TEST_CASE("is_same_template", "[base]")
