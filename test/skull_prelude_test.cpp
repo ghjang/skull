@@ -179,3 +179,16 @@ TEST_CASE("reverse", "[prelude]")
         >
     );
 }
+
+TEST_CASE("sum", "[prelude]")
+{
+    static_assert(
+        sum_v<
+            TL<
+                std::integral_constant<int, 1>,
+                std::integral_constant<int, 2>,
+                std::integral_constant<int, 3>
+            >
+        > == 6
+    );
+}
