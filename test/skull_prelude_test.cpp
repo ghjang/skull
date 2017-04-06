@@ -124,6 +124,13 @@ TEST_CASE("last", "[prelude]")
     static_assert(std::is_same_v<int, last_t<TL<float, double, int>>>);
 }
 
+TEST_CASE("init", "[prelude]")
+{
+    static_assert(std::is_same_v<TL<>, init_t<TL<int>>>);
+    //static_assert(std::is_same_v<TL<int>, init_t<TL<int, float>>>);
+    //static_assert(std::is_same_v<TL<int, float>, init_t<TL<int, float, double>>>);
+}
+
 TEST_CASE("map", "[prelude]")
 {
     static_assert(
@@ -223,4 +230,17 @@ TEST_CASE("filter", "[prelude]")
             >
         >
     );
+}
+
+TEST_CASE("take", "[prelude]")
+{
+    static_assert(std::is_same_v<TL<>, take_t<0, TL<>>>);
+    static_assert(std::is_same_v<TL<>, take_t<0, TL<int>>>);
+    static_assert(std::is_same_v<TL<>, take_t<0, TL<int, float>>>);
+
+    static_assert(std::is_same_v<TL<int>, take_t<1, TL<int, float, double>>>);
+    static_assert(std::is_same_v<TL<int, float>, take_t<2, TL<int, float, double>>>);
+    static_assert(std::is_same_v<TL<int, float, double>, take_t<3, TL<int, float, double>>>);
+    
+    static_assert(std::is_same_v<TL<int, float, double>, take_t<4, TL<int, float, double>>>);
 }
