@@ -11,6 +11,7 @@ namespace skull::prelude
 {
     using skull::base::TL;
     using skull::base::type_is;
+    using skull::base::quote;
 
     template <std::size_t n, typename TypeList>
     struct take;
