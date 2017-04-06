@@ -44,3 +44,29 @@ TEST_CASE("count_if", "[app]")
         > == 2
     );
 }
+
+TEST_CASE("count", "[app]")
+{
+    static_assert(count_v<float, TL<>> == 0);
+
+    static_assert(
+        count_v<
+            float,
+            TL<int, double, long int, std::string>
+        > == 0
+    );
+
+    static_assert(
+        count_v<
+            int,
+            TL<int, double, long int, std::string>
+        > == 1
+    );
+
+    static_assert(
+        count_v<
+            int,
+            TL<int, double, long int, std::string, int>
+        > == 2
+    );
+}

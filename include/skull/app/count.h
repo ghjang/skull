@@ -2,6 +2,8 @@
 #define SKULL_APP_COUNT_H
 
 
+#include <type_traits>
+
 #include "../base/type_list.h"
 #include "../base/invoke.h"
 #include "../base/bind.h"
@@ -34,6 +36,25 @@ namespace skull::app
 
     template <typename UnaryPredicate, typename TypeList>
     inline constexpr auto count_if_v = count_if<UnaryPredicate, TypeList>::value;
+
+
+    /**
+     * @tparam T target type to count
+     * @tparam TypeList source type list
+     */
+     template <typename T, typename TypeList>
+     struct count;
+
+     template <typename T, typename... xs>
+     struct count<T, TL<xs...>>
+                : count_if<
+                    bind_first<quote<std::is_same>, T>,
+                    TL<xs...>
+                  >
+     { };
+
+     template <typename T, typename TypeList>
+     inline constexpr auto count_v = count<T, TypeList>::value;
 } // namespace skull::app
 
 
