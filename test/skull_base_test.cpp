@@ -3,6 +3,7 @@
 #include <tuple>
 #include <string>
 
+#include "skull/base/quote.h"
 #include "skull/base/at.h"
 #include "skull/base/append.h"
 #include "skull/base/prepend.h"
@@ -31,6 +32,28 @@ TEST_CASE("append", "[base]")
         std::is_same_v<
                 TL<int, float, double, std::string>,
                 append_t<TL<int, float, double>, std::string>
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                TL<int, float, double>,
+                append_if_t<
+                    TL<int, float, double>,
+                    std::string,
+                    quote<std::is_integral>
+                >
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                TL<int, float, double, long>,
+                append_if_t<
+                    TL<int, float, double>,
+                    long,
+                    quote<std::is_integral>
+                >
         >
     );
 }
