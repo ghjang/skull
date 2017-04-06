@@ -15,11 +15,11 @@ namespace skull::app
     using skull::base::bind_first;
     using skull::prelude::sum;
 
-    template <typename TypeList, typename UnaryPredicate>
+    template <typename UnaryPredicate, typename TypeList>
     struct count_if;
 
-    template <typename... xs, typename p>
-    struct count_if<TL<xs...>, p>
+    template <typename p, typename... xs>
+    struct count_if<p, TL<xs...>>
             : sum<
                 map_t<
                     bind_first<quote<invoke>, p>,
@@ -28,8 +28,8 @@ namespace skull::app
               >
     { };
 
-    template <typename TypeList, typename UnaryPredicate>
-    inline constexpr auto count_if_v = count_if<TypeList, UnaryPredicate>::value;
+    template <typename UnaryPredicate, typename TypeList>
+    inline constexpr auto count_if_v = count_if<UnaryPredicate, TypeList>::value;
 } // namespace skull::app
 
 

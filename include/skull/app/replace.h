@@ -16,15 +16,15 @@ namespace skull::app
     using skull::prelude::map_t;
 
     /**
-     * @tparam TypeList source type list
      * @tparam UnaryPredicate a unary predicate metafunction class
      * @tparam T new type
+     * @tparam TypeList source type list
      */
-    template <typename TypeList, typename UnaryPredicate, typename T>
+    template <typename UnaryPredicate, typename T, typename TypeList>
     struct replace_if;
 
-    template <typename... xs, typename p, typename T>
-    struct replace_if<TL<xs...>, p, T>
+    template <typename p, typename T, typename... xs>
+    struct replace_if<p, T, TL<xs...>>
     {
         template <typename U>
         struct replace_impl
@@ -38,25 +38,25 @@ namespace skull::app
         using type = map_t<quote<replace_impl>, TL<xs...>>;
     };
 
-    template <typename TypeList, typename UnaryPredicate, typename T>
-    using replace_if_t = typename replace_if<TypeList, UnaryPredicate, T>::type;
+    template <typename UnaryPredicate, typename T, typename TypeList>
+    using replace_if_t = typename replace_if<UnaryPredicate, T, TypeList>::type;
 
     /**
-     * @tparam TypeList source type list
      * @tparam T old type
      * @tparam U new type
+     * @tparam TypeList source type list
      */
-    template <typename TypeList, typename T, typename U>
+    template <typename T, typename U, typename TypeList>
     struct replace
             : replace_if<
-                TypeList,
                 bind_last<quote<std::is_same>, T>,
-                U
+                U,
+                TypeList
               >
     { };
 
-    template <typename TypeList, typename T, typename U>
-    using replace_t = typename replace<TypeList, T, U>::type;
+    template <typename T, typename U, typename TypeList>
+    using replace_t = typename replace<T, U, TypeList>::type;
 } // namespace skull::app
 
 
