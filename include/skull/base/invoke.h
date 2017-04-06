@@ -17,6 +17,9 @@ namespace skull::base
 
     template <typename f, typename... xs>
     using invoke_t = typename invoke<f, xs...>::type;
+
+    template <typename f, typename... xs>
+    inline constexpr auto invoke_v = invoke<f, xs...>::value;
 } // namespace skull::base
 
 
