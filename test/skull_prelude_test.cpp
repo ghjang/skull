@@ -178,6 +178,7 @@ TEST_CASE("foldr", "[prelude]")
 TEST_CASE("reverse", "[prelude]")
 {
     static_assert(std::is_same_v<TL<>, reverse_t<TL<>>>);
+    static_assert(std::is_same_v<TL<int>, reverse_t<TL<int>>>);
 
     static_assert(
         std::is_same_v<
