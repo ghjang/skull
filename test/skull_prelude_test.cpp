@@ -131,38 +131,17 @@ TEST_CASE("init", "[prelude]")
     static_assert(std::is_same_v<TL<int, float>, init_t<TL<int, float, double>>>);
 }
 
-TEST_CASE("map", "[prelude]")
+TEST_CASE("take", "[prelude]")
 {
-    static_assert(
-        std::is_same_v<
-                TL<int const, double const, std::string const>,
-                map_t<
-                    quote<std::add_const>,
-                    TL<int, double, std::string>
-                >
-        >
-    );
+    static_assert(std::is_same_v<TL<>, take_t<0, TL<>>>);
+    static_assert(std::is_same_v<TL<>, take_t<0, TL<int>>>);
+    static_assert(std::is_same_v<TL<>, take_t<0, TL<int, float>>>);
 
-    static_assert(
-        std::is_same_v<
-                TL<int, double, std::string>,
-                map_t<
-                    quote<std::remove_const>,
-                    TL<int const, double const, std::string const>
-                >
-        >
-    );
-
-    void f();   // NOTE: function forward declaration only for this test case.
-    static_assert(
-        std::is_same_v<
-                TL<int, std::string, double *, void (*) ()>,
-                map_t<
-                    quote<std::decay>,
-                    TL<int const, std::string const &, double [8], decltype(f)>
-                >
-        >
-    );
+    static_assert(std::is_same_v<TL<int>, take_t<1, TL<int, float, double>>>);
+    static_assert(std::is_same_v<TL<int, float>, take_t<2, TL<int, float, double>>>);
+    static_assert(std::is_same_v<TL<int, float, double>, take_t<3, TL<int, float, double>>>);
+    
+    static_assert(std::is_same_v<TL<int, float, double>, take_t<4, TL<int, float, double>>>);
 }
 
 TEST_CASE("concat", "[prelude]")
@@ -217,6 +196,43 @@ TEST_CASE("elem", "[prelude]")
     static_assert(!elem_v<int, TL<double, long int, std::string>>);
 }
 
+// map, transform
+// cf.> std::transform, runtime transform
+TEST_CASE("map", "[prelude]")
+{
+    static_assert(
+        std::is_same_v<
+                TL<int const, double const, std::string const>,
+                map_t<
+                    quote<std::add_const>,
+                    TL<int, double, std::string>
+                >
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                TL<int, double, std::string>,
+                map_t<
+                    quote<std::remove_const>,
+                    TL<int const, double const, std::string const>
+                >
+        >
+    );
+
+    void f();   // NOTE: function forward declaration only for this test case.
+    static_assert(
+        std::is_same_v<
+                TL<int, std::string, double *, void (*) ()>,
+                map_t<
+                    quote<std::decay>,
+                    TL<int const, std::string const &, double [8], decltype(f)>
+                >
+        >
+    );
+}
+
+// filter, select
 TEST_CASE("filter", "[prelude]")
 {
     static_assert(std::is_same_v<TL<>, filter_t<quote<std::is_integral>, TL<>>>);
@@ -232,15 +248,100 @@ TEST_CASE("filter", "[prelude]")
     );
 }
 
-TEST_CASE("take", "[prelude]")
-{
-    static_assert(std::is_same_v<TL<>, take_t<0, TL<>>>);
-    static_assert(std::is_same_v<TL<>, take_t<0, TL<int>>>);
-    static_assert(std::is_same_v<TL<>, take_t<0, TL<int, float>>>);
 
-    static_assert(std::is_same_v<TL<int>, take_t<1, TL<int, float, double>>>);
-    static_assert(std::is_same_v<TL<int, float>, take_t<2, TL<int, float, double>>>);
-    static_assert(std::is_same_v<TL<int, float, double>, take_t<3, TL<int, float, double>>>);
-    
-    static_assert(std::is_same_v<TL<int, float, double>, take_t<4, TL<int, float, double>>>);
+template <int i>
+using int_c_t = std::integral_constant<int, i>;
+
+// note that left-side is the accumulation result.
+template <typename Acc, typename T>
+struct addition_l;
+
+template <int i, int j>
+struct addition_l<int_c_t<i>, int_c_t<j>>
+        : int_c_t<i + j>
+{ };
+
+
+// note that right-side is the accumulation result.
+template <typename T, typename Acc>
+struct addition_r;
+
+template <int i, int j>
+struct addition_r<int_c_t<i>, int_c_t<j>>
+        : int_c_t<i + j>
+{ };
+
+
+// note that left-side is the accumulation result.
+template <typename Acc, typename T>
+struct subtraction_l;
+
+template <int i, int j>
+struct subtraction_l<int_c_t<i>, int_c_t<j>>
+        : int_c_t<i - j>
+{ };
+
+// note that right-side is the accumulation result.
+template <typename T, typename Acc>
+struct subtraction_r;
+
+template <int i, int j>
+struct subtraction_r<int_c_t<i>, int_c_t<j>>
+        : int_c_t<i - j>
+{ };
+
+
+// fold, reduce, accumulation
+// cf.> std::accumulate, runtime fold
+TEST_CASE("foldl, foldr", "[prelude]")
+{
+    // addition
+    static_assert(
+        foldl_t<
+            quote<addition_l>,
+            int_c_t<0>,
+            TL<
+                int_c_t<1>,
+                int_c_t<2>,
+                int_c_t<3>
+            >
+        >::value == 6
+    );
+
+    static_assert(
+        foldr_t<
+            quote<addition_r>,
+            int_c_t<0>,
+            TL<
+                int_c_t<1>,
+                int_c_t<2>,
+                int_c_t<3>
+            >
+        >::value == 6
+    );
+
+    // subtraction
+    static_assert(
+        foldl_t<
+            quote<subtraction_l>,
+            int_c_t<0>,
+            TL<
+                int_c_t<1>,
+                int_c_t<2>,
+                int_c_t<3>
+            >
+        >::value == -6  // (((0 - 1) - 2) - 3)
+    );
+
+    static_assert(
+        foldr_t<
+            quote<subtraction_r>,
+            int_c_t<0>,
+            TL<
+                int_c_t<1>,
+                int_c_t<2>,
+                int_c_t<3>
+            >
+        >::value == 2   // (1 - (2 - (3 - 0)))
+    );
 }
