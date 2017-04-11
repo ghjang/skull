@@ -28,6 +28,7 @@ set(SOURCE_FILES
         skull_prelude_test.cpp
         skull_app_test.cpp
         example/00_make_variant_array.cpp
+        example/01_make_tuple.cpp
         main.cpp)
 
 add_executable(skull_test ${SOURCE_FILES})
