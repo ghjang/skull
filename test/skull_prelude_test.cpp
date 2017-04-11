@@ -196,6 +196,47 @@ TEST_CASE("elem", "[prelude]")
     static_assert(!elem_v<int, TL<double, long int, std::string>>);
 }
 
+TEST_CASE("zip", "[prelude]")
+{
+    static_assert(std::is_same_v<TL<>, zip_t<TL<>, TL<>>>);
+    static_assert(std::is_same_v<TL<>, zip_t<TL<int>, TL<>>>);
+    static_assert(std::is_same_v<TL<>, zip_t<TL<>, TL<int>>>);
+
+    static_assert(
+        std::is_same_v<
+                TL<TL<int, int>>,
+                zip_t<TL<int>, TL<int>>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+                TL<
+                    TL<int, int>,
+                    TL<long, char>,
+                    TL<long long, std::string>
+                >,
+                zip_t<
+                    TL<int, long, long long>,
+                    TL<int, char, std::string>
+                >
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                TL<
+                    TL<int, int>,
+                    TL<long, char>
+                >,
+                zip_t<
+                    TL<int, long>,
+                    TL<int, char, std::string>
+                >
+        >
+    );
+}
+
+
 // map, transform
 // cf.> std::transform, runtime transform
 TEST_CASE("map", "[prelude]")

@@ -30,6 +30,7 @@
 #include "prelude/filter.h"     // filter higher-order metafunction
 #include "prelude/not.h"
 #include "prelude/take.h"
+#include "prelude/zip.h"
 
 
 #endif // SKULL_PRELUDE_H
