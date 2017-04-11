@@ -209,3 +209,86 @@ TEST_CASE("my_make_tuple with horizontal wrap", "[example]")
     //          'member found by ambiguous name lookup'
     //t.value_;
 }
+
+
+//==============================================================================
+namespace my_tuple::take2
+{   
+    /**
+     * vertical wrap
+     */ 
+    template <typename T, typename Base>
+    struct v_wrap : Base
+    {
+        using Base::get;
+
+        using base_index_t = typename Base::index_t;
+        using index_t = std::integral_constant<std::size_t, base_index_t::value + 1>;
+
+        auto & get(index_t)
+        { return value_; }
+
+        T value_;
+    };
+
+    template <typename T>
+    struct v_wrap<T, empty_base>
+    {
+        using index_t = std::integral_constant<std::size_t, 0>;
+
+        auto & get(index_t)
+        { return value_; }
+
+        T value_;
+    };
+
+    template <typename Acc, typename T>
+    struct inherit
+            : type_is<
+                    v_wrap<T, Acc>
+              >
+    { };
+
+    template <std::size_t i, typename T, typename Base>
+    auto & my_get(v_wrap<T, Base> & t)
+    {
+        return t.get(std::integral_constant<std::size_t, i>{});
+    }
+
+    template <std::size_t... i, typename... T>
+    auto my_make_tuple_impl(std::index_sequence<i...>, T &&... args)
+    {
+        using my_tuple_t = foldl_t<
+                                quote<inherit>,         // binary metafunction
+                                empty_base,             // left-side accumulation
+                                TL<std::decay_t<T>...>
+                           >;
+
+        my_tuple_t t{};
+        (void) std::initializer_list<int> {
+            (my_get<i>(t) = std::forward<T>(args), 0)...
+        };
+        return t;
+    }
+
+    template <typename... T>
+    auto my_make_tuple(T &&... args)
+    {
+        return my_make_tuple_impl(
+                    std::index_sequence_for<T...>{},
+                    std::forward<T>(args)...
+               );
+    }
+} // namespace my_tuple::take2
+
+
+TEST_CASE("my_make_tuple with vertical wrap, take2, indexed element access", "[example]")
+{
+    using namespace my_tuple::take2;
+
+    auto t = my_make_tuple(10, "abc", 20.0);
+
+    REQUIRE(my_get<0>(t) == 10);
+    REQUIRE(std::strcmp(my_get<1>(t), "abc") == 0);
+    REQUIRE(my_get<2>(t) == 20.0);
+}
