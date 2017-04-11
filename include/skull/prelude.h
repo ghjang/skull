@@ -14,6 +14,8 @@
 #include "base/append.h"        // [xs] ++ [new_element]
 #include "base/prepend.h"       // new_element : [xs]
 
+#include "base/integer_sequence.h"
+
 #include "prelude/id.h"
 #include "prelude/length.h"
 #include "prelude/head.h"

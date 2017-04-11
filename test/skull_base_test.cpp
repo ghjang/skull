@@ -14,6 +14,7 @@
 #include "skull/base/is_same_template.h"
 #include "skull/base/compose.h"
 #include "skull/base/rename_template.h"
+#include "skull/base/integer_sequence.h"
 using namespace skull::base;
 
 
@@ -245,4 +246,59 @@ TEST_CASE("prepend", "[base]")
                 >
         >
     );
+}
+
+TEST_CASE("to_integer_sequence, from_integer_sequence", "[base]")
+{
+    // to_integer_sequence_t
+    static_assert(
+        std::is_same_v<
+            std::integer_sequence<std::size_t, 1, 2, 3>,
+            to_integer_sequence_t<
+                TL<
+                    std::integral_constant<std::size_t, 1>,
+                    std::integral_constant<std::size_t, 2>,
+                    std::integral_constant<std::size_t, 3>
+                >
+            >
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            std::make_index_sequence<3>,
+            to_integer_sequence_t<
+                TL<
+                    std::integral_constant<std::size_t, 0>,
+                    std::integral_constant<std::size_t, 1>,
+                    std::integral_constant<std::size_t, 2>
+                >
+            >
+        >
+    );
+
+    // from_integer_sequence_t
+    static_assert(
+        std::is_same_v<
+            TL<
+                std::integral_constant<std::size_t, 0>,
+                std::integral_constant<std::size_t, 1>,
+                std::integral_constant<std::size_t, 2>
+            >,
+            from_integer_sequence_t<
+                std::integer_sequence<std::size_t, 0, 1, 2>
+            >
+        >
+    );    
+    static_assert(
+        std::is_same_v<
+            TL<
+                std::integral_constant<std::size_t, 0>,
+                std::integral_constant<std::size_t, 1>,
+                std::integral_constant<std::size_t, 2>
+            >,
+            from_integer_sequence_t<
+                std::make_index_sequence<3>
+            >
+        >
+    );    
 }
