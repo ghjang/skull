@@ -70,6 +70,56 @@ TEST_CASE("my_make_tuple with vertical wrap", "[example]")
     REQUIRE(my_get<int>(t) == 10);
     REQUIRE(std::strcmp(my_get<char const *>(t), "abc") == 0);
     REQUIRE(my_get<double>(t) == 20.0);
+
+    // t's type
+    /*
+    v_wrap<
+        double,
+        v_wrap<
+            const char *,
+            v_wrap<
+                int,
+                empty_base
+            >
+        >
+    >
+    */
+
+    // Accessing the values directly
+
+    // the first int
+    REQUIRE((static_cast<v_wrap<int, empty_base> &>(t).value_ == 10));
+
+    // the second char const *
+    REQUIRE(std::strcmp(
+                    static_cast<
+                        v_wrap<
+                            char const *,
+                            v_wrap<
+                                int,
+                                empty_base
+                            >
+                        > &
+                    >(t).value_,
+                    "abc"
+            ) == 0);
+
+    // the third double
+    REQUIRE((static_cast<
+                v_wrap<
+                    double,
+                    v_wrap<
+                        const char *,
+                        v_wrap<
+                            int,
+                            empty_base
+                        >
+                    >
+                > &
+             >(t).value_ == 20.0));
+
+    // NOTE: the bottom-most value_ member is looked up.
+    REQUIRE(t.value_ == 20.0);
 }
 
 
@@ -128,4 +178,34 @@ TEST_CASE("my_make_tuple with horizontal wrap", "[example]")
     REQUIRE(my_get<int>(t) == 10);
     REQUIRE(std::strcmp(my_get<char const *>(t), "abc") == 0);
     REQUIRE(my_get<double>(t) == 20.0);
+
+    // t's type
+    /*
+    h_wrap<
+        holder<double>,
+        h_wrap<
+            holder<const char *>,
+            h_wrap<
+                holder<int>,
+                empty_base
+            >
+        >
+    >
+    */
+
+    // Accessing the values directly
+
+    // the first int
+    REQUIRE(static_cast<holder<int> &>(t).value_ == 10);
+
+    // the second char const *
+    REQUIRE(std::strcmp(static_cast<holder<char const *> &>(t).value_, "abc") == 0);
+
+    // the third double
+    REQUIRE(static_cast<holder<double> &>(t).value_ == 20.0);
+
+    // NOTE: This expression is now a compile error:
+    //          'member 'value_' found in multiple base classes of different types',
+    //          'member found by ambiguous name lookup'
+    //t.value_;
 }
