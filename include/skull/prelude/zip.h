@@ -5,6 +5,7 @@
 #include "../base/type_list.h"
 #include "../base/identity.h"
 #include "../base/prepend.h"
+#include "../base/integer_sequence.h"
 
 
 namespace skull::prelude
@@ -12,6 +13,7 @@ namespace skull::prelude
     using skull::base::TL;
     using skull::base::type_is;
     using skull::base::prepend;
+    using skull::base::from_integer_sequence_t;
 
     template <typename xs, typename ys>
     struct zip;
