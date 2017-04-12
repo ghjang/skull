@@ -379,12 +379,6 @@ TEST_CASE("my_tuple with recursive data members", "[example]")
 //==============================================================================
 namespace my_tuple::take4
 {
-    template <typename T>
-    struct holder
-    {
-        T value_;
-    };
-
     template <typename... xs>
     struct my_tuple;
 
@@ -392,9 +386,49 @@ namespace my_tuple::take4
     struct my_tuple<>
     { };
 
+    namespace detail
+    {
+        template <typename Index, typename T>
+        struct holder
+        {
+            T value_;
+        };
+
+        template <typename IndexAndTypePairList>
+        struct my_tuple_impl;
+
+        template <typename... IndexAndTypePair>
+        struct my_tuple_impl<TL<IndexAndTypePair...>>
+                : holder<
+                    head_t<IndexAndTypePair>,
+                    last_t<IndexAndTypePair>
+                  >...
+        { }; 
+    } // namespace detail
+
     template <typename x, typename... xs>
-    struct my_tuple<x, xs...> : holder<x>, holder<xs>...
+    struct my_tuple<x, xs...>
+            : detail::my_tuple_impl<
+                    zip_t<
+                        from_integer_sequence_t<
+                            std::make_index_sequence<1 + sizeof...(xs)>
+                        >,
+                        TL<x, xs...>
+                    >
+              >
     { };
+
+    template <std::size_t i, typename T>
+    auto & my_get_impl(detail::holder<std::integral_constant<std::size_t, i>, T> & t)
+    {
+        return t.value_;
+    }
+
+    template <std::size_t i, typename... xs>
+    auto & my_get(my_tuple<xs...> & t)
+    {
+        return my_get_impl<i>(t);
+    }
 
     template <typename... T>
     auto my_make_tuple(T &&... args)
@@ -418,21 +452,17 @@ TEST_CASE("my_tuple with multiple inheritance", "[example]")
 
     auto t = my_make_tuple(10);
     static_assert(std::is_same_v<my_tuple<int>, decltype(t)>);
-    //REQUIRE(my_get<0>(t) == 10);
+    REQUIRE(my_get<0>(t) == 10);
 
     auto t1 = my_make_tuple(10, "abc", 20.0);
     static_assert(std::is_same_v<my_tuple<int, char const *, double>, decltype(t1)>);
-    /*
     REQUIRE(my_get<0>(t1) == 10);
     REQUIRE(std::strcmp(my_get<1>(t1), "abc") == 0);
     REQUIRE(my_get<2>(t1) == 20.0);
-    */
 
     // NOTE: aggregate initialization is possible here.
     auto t2 = my_tuple<int, char const *, double>{ 10, "abc", 20.0 };
-    /*
     REQUIRE(my_get<0>(t2) == 10);
     REQUIRE(std::strcmp(my_get<1>(t2), "abc") == 0);
     REQUIRE(my_get<2>(t2) == 20.0);
-    */
 }
