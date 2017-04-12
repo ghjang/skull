@@ -9,6 +9,7 @@
 #include "base/rename_template.h"
 #include "base/bind.h"
 #include "base/compose.h"
+#include "base/unpack.h"
 
 #include "base/at.h"            // xs !! n
 #include "base/append.h"        // [xs] ++ [new_element]

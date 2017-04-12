@@ -13,6 +13,7 @@
 #include "skull/base/prepend.h"
 #include "skull/base/is_same_template.h"
 #include "skull/base/compose.h"
+#include "skull/base/unpack.h"
 #include "skull/base/rename_template.h"
 #include "skull/base/integer_sequence.h"
 using namespace skull::base;
@@ -167,6 +168,22 @@ TEST_CASE("compose", "[base]")
                 >;
 
     static_assert(invoke_v<g_t, std::decay_t<decltype("abc")>>);
+}
+
+
+// NOTE: data_holder is not a metafunction.
+template <typename T, typename U>
+struct data_holder
+{ };
+
+TEST_CASE("unpack", "[base]")
+{
+    static_assert(
+        std::is_same_v<
+            data_holder<int, double>,
+            unpack_t<data_holder, TL<int, double>>
+        >
+    );
 }
 
 TEST_CASE("at", "[base]")
