@@ -374,3 +374,65 @@ TEST_CASE("my_tuple with recursive data members", "[example]")
     REQUIRE(std::strcmp(my_get<1>(t2), "abc") == 0);
     REQUIRE(my_get<2>(t2) == 20.0);
 }
+
+
+//==============================================================================
+namespace my_tuple::take4
+{
+    template <typename T>
+    struct holder
+    {
+        T value_;
+    };
+
+    template <typename... xs>
+    struct my_tuple;
+
+    template <>
+    struct my_tuple<>
+    { };
+
+    template <typename x, typename... xs>
+    struct my_tuple<x, xs...> : holder<x>, holder<xs>...
+    { };
+
+    template <typename... T>
+    auto my_make_tuple(T &&... args)
+    {
+        using my_tuple_t = my_tuple<std::decay_t<T>...>;
+
+        // NOTE: aggregate initialization is possible here.
+        return my_tuple_t{ std::forward<T>(args)... };
+    }
+} // namespace my_tuple::take4
+
+
+TEST_CASE("my_tuple with multiple inheritance", "[example]")
+{
+    using namespace my_tuple::take4;
+
+    auto emptyTuple = my_tuple<>{};
+    auto emptyTuple1 = my_make_tuple();
+    static_assert(std::is_same_v<my_tuple<>, decltype(emptyTuple1)>);
+    static_assert(std::is_same_v<decltype(emptyTuple), decltype(emptyTuple1)>);
+
+    auto t = my_make_tuple(10);
+    static_assert(std::is_same_v<my_tuple<int>, decltype(t)>);
+    //REQUIRE(my_get<0>(t) == 10);
+
+    auto t1 = my_make_tuple(10, "abc", 20.0);
+    static_assert(std::is_same_v<my_tuple<int, char const *, double>, decltype(t1)>);
+    /*
+    REQUIRE(my_get<0>(t1) == 10);
+    REQUIRE(std::strcmp(my_get<1>(t1), "abc") == 0);
+    REQUIRE(my_get<2>(t1) == 20.0);
+    */
+
+    // NOTE: aggregate initialization is possible here.
+    auto t2 = my_tuple<int, char const *, double>{ 10, "abc", 20.0 };
+    /*
+    REQUIRE(my_get<0>(t2) == 10);
+    REQUIRE(std::strcmp(my_get<1>(t2), "abc") == 0);
+    REQUIRE(my_get<2>(t2) == 20.0);
+    */
+}
