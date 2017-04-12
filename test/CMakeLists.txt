@@ -19,8 +19,14 @@ endif()
 set(SKULL_ROOT "../include")
 include_directories(${SKULL_ROOT})
 
-set(CMAKE_C_COMPILER  "/Users/gilhojang/clang/clang+llvm-4.0.0-x86_64-apple-darwin/bin/clang")
-set(CMAKE_CXX_COMPILER  "/Users/gilhojang/clang/clang+llvm-4.0.0-x86_64-apple-darwin/bin/clang++")
+# build type
+set(CMAKE_BUILD_TYPE "Debug")
+
+# LLVM 4.0.0 base path
+set(LLVM_4_0_0_BASE "/Users/gilhojang/clang/clang+llvm-4.0.0-x86_64-apple-darwin")
+
+set(CMAKE_C_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang")
+set(CMAKE_CXX_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
 set(SOURCE_FILES
