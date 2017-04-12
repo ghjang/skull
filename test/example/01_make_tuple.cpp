@@ -399,10 +399,7 @@ namespace my_tuple::take4
 
         template <typename... IndexAndTypePair>
         struct my_tuple_impl<TL<IndexAndTypePair...>>
-                : holder<
-                    head_t<IndexAndTypePair>,
-                    last_t<IndexAndTypePair>
-                  >...
+                : unpack_t<holder, IndexAndTypePair>...
         { }; 
     } // namespace detail
 
