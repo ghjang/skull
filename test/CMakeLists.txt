@@ -47,6 +47,8 @@ set(CMAKE_C_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang")
 set(CMAKE_CXX_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
+link_directories(${LLVM_4_0_0_BASE}/lib)
+
 set(SOURCE_FILES
         skull_base_test.cpp
         skull_prelude_test.cpp
@@ -55,4 +57,4 @@ set(SOURCE_FILES
         example/01_make_tuple.cpp
         main.cpp)
 
-add_executable(skull_test ${SOURCE_FILES})
+add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
