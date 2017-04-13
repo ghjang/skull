@@ -5,6 +5,7 @@
 #include <tuple>
 #include <variant>
 
+#include "skull/base/as_type_list.h"
 #include "skull/base/quote.h"
 #include "skull/base/bind.h"
 #include "skull/base/invoke.h"
@@ -25,6 +26,16 @@ TEST_CASE("type_list", "[base]")
         std::is_same_v<
                 TL<int, int, int>,
                 type_list<int, int, int>
+        >
+    );
+}
+
+TEST_CASE("as_type_list", "[base]")
+{
+    static_assert(
+        std::is_same_v<
+                TL<int, double, std::string>,
+                as_type_list_t<int, double, std::string>
         >
     );
 }

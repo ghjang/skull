@@ -4,6 +4,7 @@
 
 #include "base/identity.h"
 #include "base/type_list.h"
+#include "base/as_type_list.h"
 #include "base/quote.h"
 #include "base/invoke.h"
 #include "base/rename_template.h"
