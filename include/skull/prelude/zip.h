@@ -7,6 +7,7 @@
 #include "../base/prepend.h"
 #include "../base/unpack.h"
 #include "../base/integer_sequence.h"
+#include "../base/invoke.h"
 
 
 namespace skull::prelude
@@ -16,7 +17,9 @@ namespace skull::prelude
     using skull::base::prepend;
     using skull::base::unpack_t;
     using skull::base::from_integer_sequence_t;
+    using skull::base::invoke_t;
 
+    //==========================================================================
     template <typename xs, typename ys>
     struct zip;
 
@@ -40,6 +43,38 @@ namespace skull::prelude
             : prepend<
                     TL<x, y>,
                     zip_t<TL<xs...>, TL<ys...>>
+              >
+    { };
+
+    //==========================================================================
+    /**
+     * @tparam f binary metafunction class
+     * @tparam xs type list
+     * @tparam ys type list
+     */
+    template <typename f, typename xs, typename ys>
+    struct zipWith;
+
+    template <typename f, typename xs, typename ys>
+    using zipWith_t = typename zipWith<f, xs, ys>::type;
+
+    template <typename f>
+    struct zipWith<f, TL<>, TL<>> : type_is<TL<>>
+    { };
+
+    template <typename f, typename x, typename... xs>
+    struct zipWith<f, TL<x, xs...>, TL<>> : type_is<TL<>>
+    { };
+
+    template <typename f, typename y, typename... ys>
+    struct zipWith<f, TL<>, TL<y, ys...>> : type_is<TL<>>
+    { };
+
+    template <typename f, typename x, typename... xs, typename y, typename... ys>
+    struct zipWith<f, TL<x, xs...>, TL<y, ys...>>
+            : prepend<
+                    invoke_t<f, x, y>,
+                    zipWith_t<f, TL<xs...>, TL<ys...>>
               >
     { };
 } // namespace skull::prelude

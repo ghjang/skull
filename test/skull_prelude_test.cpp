@@ -236,6 +236,30 @@ TEST_CASE("zip", "[prelude]")
     );
 }
 
+TEST_CASE("zipWith", "[prelude]")
+{
+    struct A { };
+    struct B { };
+    struct C : A { };
+    struct D : A { };
+    struct E : A { };
+    struct F : C { };
+
+    static_assert(
+        std::is_same_v<
+            TL<
+                std::true_type, std::true_type, std::true_type,
+                std::false_type, std::true_type, std::false_type
+            >,
+            zipWith_t<
+                quote<std::is_base_of>,
+                TL<A, A, A, B, B, B>,
+                TL<F, E, D, C, B, A>
+            >
+        >
+    );
+}
+
 
 // map, transform
 // cf.> std::transform, runtime transform
