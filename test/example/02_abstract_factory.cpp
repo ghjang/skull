@@ -169,6 +169,9 @@ struct factory
     virtual ~factory() { };
 
     virtual Component * create(id<Component>) = 0;
+
+    Component * create()
+    { return create(id<Component>{}); }
 };
 
 
@@ -209,9 +212,7 @@ struct abstract_factory<TL<AbstractComponent...>>
         // call the actual factory method
         return static_cast<
                     factory<TargetAbstractComponent> *
-               >(this)->create(
-                            id<TargetAbstractComponent>{}
-                        );
+               >(this)->create();
     }
 };
 
@@ -231,7 +232,8 @@ struct concrete_factory_impl : Base
         std::is_base_of_v<
                 target_abstract_component_t,
                 target_concrete_component_t
-        >
+        >,
+        "abstract component and concrete component should be compatible."
     );
 
     target_concrete_component_t *
@@ -301,22 +303,64 @@ struct concrete_factory<AbstractFactoryInterface, TL<ConcreteComponent...>>
 
 TEST_CASE("generic abstract factory", "[example]")
 {
+    //==========================================================================
     // generic abstract factory interface
     using af_interface_t = abstract_factory<
                                 TL<window, button, scroll_bar>
                            >;
 
+    //==========================================================================
     // concrete factory for Mac
     using mac_factory_t = concrete_factory<
                                 af_interface_t,
                                 TL<mac_window, mac_button, mac_scroll_bar>
                           >;
 
+    // NOTE: This is an expected compile error.
+    /*
+    using mac_factory_1_t = concrete_factory<
+                                af_interface_t,
+                                TL<mac_window, mac_button>  // not enough
+                                                            // concrete components
+                            >;
+    auto mac_f1 = mac_factory_1_t{};
+    */
+
+    // NOTE: This is an expected compile error.
+    /*
+    using mac_factory_2_t = concrete_factory<
+                                af_interface_t,
+                                TL<
+                                    mac_window,
+                                    mac_button,
+                                    mac_button  // The third component should be
+                                                // derived from scroll_bar class.
+                                >
+                            >;
+    auto mac_f2 = mac_factory_2_t{};
+    */
+
+    // NOTE: mac_factory_3_t is a type alias for a wrong type.
+    //          But the type alias itself doesn't cause the compile error.
+    using mac_factory_3_t = concrete_factory<
+                                af_interface_t,
+                                TL<
+                                    mac_window,
+                                    mac_button,
+                                    mac_button  // The third component should be
+                                                // derived from scroll_bar class.
+                                >
+                            >;    
+
+    //==========================================================================
     // concrete factory for Windows
     using win_factory_t = concrete_factory<
                                 af_interface_t,
                                 TL<win_window, win_button, win_scroll_bar>
                           >;
+
+    //==========================================================================
+    // some test codes for the factories
 
     std::unique_ptr<af_interface_t> ptrFactory;
 
@@ -339,7 +383,7 @@ TEST_CASE("generic abstract factory", "[example]")
     // for Windows
     ptrFactory.reset(new win_factory_t{});
 
-    // somewhere in other codes
+    // somewhere in other codes. just a copy of the above code block.
     {
         std::unique_ptr<window> ptrWindow{ ptrFactory->create<window>() };
         std::unique_ptr<button> ptrButton{ ptrFactory->create<button>() };
@@ -351,4 +395,12 @@ TEST_CASE("generic abstract factory", "[example]")
         ptrButton->draw();
         ptrScrollBar->draw();
     }
+
+    // NOTE: This is possbile the abstract factory interface is generated
+    //          with the horizontal wrap.
+    factory<button> * pButtonFactory = static_cast<
+                                            factory<button> *
+                                       >(ptrFactory.get());
+    std::unique_ptr<button> ptrButton{ pButtonFactory->create() };
+    ptrButton->draw();
 }
