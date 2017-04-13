@@ -56,6 +56,7 @@ set(SOURCE_FILES
         skull_app_test.cpp
         example/00_make_variant_array.cpp
         example/01_make_tuple.cpp
+        example/02_abstract_factory.cpp
         main.cpp)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
