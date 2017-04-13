@@ -47,6 +47,7 @@ set(CMAKE_C_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang")
 set(CMAKE_CXX_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
+# NOTE: This is required to make the linker, ld, find the LLVM 4.0.0 libraries.
 link_directories(${LLVM_4_0_0_BASE}/lib)
 
 set(SOURCE_FILES
@@ -58,3 +59,6 @@ set(SOURCE_FILES
         main.cpp)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
+
+# NOTE: This should be placed AFTER the above 'add_executable' command.
+target_link_libraries(${CMAKE_PROJECT_NAME} LINK_PUBLIC c++)
