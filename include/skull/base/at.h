@@ -26,7 +26,7 @@ namespace skull::base
     { };
 
     template <std::size_t i, typename TypeList>
-    using at_c_t = at_t<std::integral_constant<std::size_t, i>, TypeList>;
+    using at_c_t = typename at_c<i, TypeList>::type;
 } // namespace skull::base
 
 
