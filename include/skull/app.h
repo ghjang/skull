@@ -12,8 +12,7 @@
 
 namespace skull::app
 {
-    using skull::base::rename_template;
-    using skull::base::rename_template_t;
+    using namespace skull::base;
 } // namespace skull::app
 
 

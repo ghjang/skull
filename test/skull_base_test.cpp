@@ -5,18 +5,7 @@
 #include <tuple>
 #include <variant>
 
-#include "skull/base/as_type_list.h"
-#include "skull/base/quote.h"
-#include "skull/base/bind.h"
-#include "skull/base/invoke.h"
-#include "skull/base/at.h"
-#include "skull/base/append.h"
-#include "skull/base/prepend.h"
-#include "skull/base/is_same_template.h"
-#include "skull/base/compose.h"
-#include "skull/base/unpack.h"
-#include "skull/base/rename_template.h"
-#include "skull/base/integer_sequence.h"
+#include "skull/base.h"
 using namespace skull::base;
 
 
