@@ -370,7 +370,7 @@ TEST_CASE("foldl, foldr", "[prelude]")
                 int_c_t<2>,
                 int_c_t<3>
             >
-        >::value == 6
+        >::value == 6   // (((0 + 1) + 2) + 3)
     );
 
     static_assert(
@@ -382,7 +382,7 @@ TEST_CASE("foldl, foldr", "[prelude]")
                 int_c_t<2>,
                 int_c_t<3>
             >
-        >::value == 6
+        >::value == 6   // (1 + (2 + (3 + 0)))
     );
 
     // subtraction
