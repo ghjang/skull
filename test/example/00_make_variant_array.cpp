@@ -7,7 +7,7 @@
 #include "skull/app.h"
 
 
-// NOTE: C++17 class template decuction guides is not supported in LLVM 4.0.0.
+// NOTE: C++17 class template decuction guides are not supported in LLVM 4.0.0.
 /*
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
