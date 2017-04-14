@@ -150,11 +150,6 @@ TEST_CASE("make_variant_array", "[example]")
         // ...
     }
 
-    REQUIRE(std::visit(
-                [](auto e) { return 0; },
-                varArr[0]
-            ) == 0);
-
     auto varArr1 = make_variant_array(100, "abc", 200.0, 300, 400);
 
     static_assert(
