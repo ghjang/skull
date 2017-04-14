@@ -13,15 +13,15 @@ namespace skull::prelude
     using skull::base::type_is;
     using skull::base::quote;
 
-    template <std::size_t n, typename TypeList>
+    template <typename n, typename TypeList>
     struct take;
 
     template <std::size_t n>
-    struct take<n, TL<>> : type_is<TL<>>
+    struct take<std::integral_constant<std::size_t, n>, TL<>> : type_is<TL<>>
     { };
 
     template <std::size_t n, typename x, typename... xs>
-    struct take<n, TL<x, xs...>>
+    struct take<std::integral_constant<std::size_t, n>, TL<x, xs...>>
     {
         template <std::size_t i>
         using int_c_t = std::integral_constant<std::size_t, i>;
@@ -45,8 +45,14 @@ namespace skull::prelude
                               >::second_type;
     };
 
-    template <std::size_t n, typename TypeList>
+    template <typename n, typename TypeList>
     using take_t = typename take<n, TypeList>::type;
+
+    template <std::size_t n, typename TypeList>
+    using take_c = take<std::integral_constant<std::size_t, n>, TypeList>;
+
+    template <std::size_t n, typename TypeList>
+    using take_c_t = typename take_c<n, TypeList>::type;
 } // namespace skull::prelude
 
 

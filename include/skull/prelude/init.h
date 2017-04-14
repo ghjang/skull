@@ -20,7 +20,7 @@ namespace skull::prelude
 
     template <typename x, typename... xs>
     struct init<TL<x, xs...>>
-            : take<sizeof...(xs), TL<x, xs...>>
+            : take_c<sizeof...(xs), TL<x, xs...>>
     { };
 
     template <typename TypeList>
