@@ -396,7 +396,7 @@ TEST_CASE("generic abstract factory", "[example]")
         ptrScrollBar->draw();
     }
 
-    // NOTE: This is possbile the abstract factory interface is generated
+    // NOTE: This is possbile because the abstract factory interface was generated
     //          with the horizontal wrap.
     factory<button> * pButtonFactory = static_cast<
                                             factory<button> *
