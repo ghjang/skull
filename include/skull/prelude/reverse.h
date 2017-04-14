@@ -17,16 +17,16 @@ namespace skull::prelude
     template <typename x, typename... xs>
     struct reverse<TL<x, xs...>>
     {
-        template <typename TypeList, typename T>
-        struct prepend;
+        template <typename Acc, typename T>
+        struct prepend_impl;
 
         template <typename... ys, typename T>
-        struct prepend<TL<ys...>, T> : type_is<TL<T, ys...>>
+        struct prepend_impl<TL<ys...>, T> : type_is<TL<T, ys...>>
         { };
 
         using type = foldl_t<
-                        quote<prepend>,     // binary function
-                        TL<>,               // left accumulation
+                        quote<prepend_impl>,     // binary function
+                        TL<>,                    // left-side accumulation
                         TL<x, xs...>
                      >;
     };
