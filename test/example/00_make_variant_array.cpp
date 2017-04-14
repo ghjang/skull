@@ -99,9 +99,14 @@ TEST_CASE("C++17 std::variant", "[example]")
     // This results in a compile error: no viable overloaded '='
     //v1 = 10;
 
-    // These are compiled anyway. Huh??
-    std::get<0>(v1);
-    std::get<3>(v1);
+    try {
+        // These are compiled anyway. Huh??
+        std::get<0>(v1);
+        std::get<3>(v1);
+    }
+    catch (std::bad_variant_access const&) {
+        // just ignore the exception here.
+    }
 
     // These work.
     v1 = 20.0;
