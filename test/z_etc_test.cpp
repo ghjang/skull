@@ -1,6 +1,8 @@
 #include "catch.hpp"
 
 #include <type_traits>
+#include <tuple>
+#include <optional>
 
 #include "skull/prelude.h"
 using namespace skull::prelude;
@@ -33,6 +35,13 @@ TEST_CASE("functor", "[etc]")
         std::is_same_v<
             typename functor<std::add_const, std::tuple<int>>::type,
             std::tuple<int const>
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+            typename functor<std::add_const, std::optional<int>>::type,
+            std::optional<int const>
         >
     );
 }
@@ -72,6 +81,16 @@ TEST_CASE("functor with skull", "[etc]")
                 std::tuple<int>
             >,
             std::tuple<int const>
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+            functor_s_t<
+                quote<std::add_const>,  // mata-function to meta-function class
+                std::optional<int>
+            >,
+            std::optional<int const>
         >
     );
 
