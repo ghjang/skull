@@ -11,7 +11,7 @@ using namespace skull::prelude;
 
 namespace
 {
-    template <template <typename...> class F, typename T>
+    template <template <typename> class F, typename T>
     struct functor;
 
     template
