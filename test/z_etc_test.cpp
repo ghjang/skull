@@ -26,6 +26,9 @@ namespace
     {
         using type = Container<typename F<T>::type...>;
     };
+
+    template <template <typename> class F, typename T>
+    using functor_t = typename functor<F, T>::type;
 } // un-named namespace
 
 
@@ -44,6 +47,13 @@ TEST_CASE("functor", "[etc]")
             std::optional<int const>
         >
     );
+}
+
+#define SA_IS_SAME(...) static_assert(std::is_same_v<__VA_ARGS__>)
+
+TEST_CASE("SA_IS_SAME macro", "[etc]")
+{
+    SA_IS_SAME(functor_t<std::add_const, std::optional<int>>, std::optional<int const>);
 }
 
 
