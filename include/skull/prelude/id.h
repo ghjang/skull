@@ -11,7 +11,9 @@ namespace skull::prelude
 
     template <typename T>
     struct id : type_is<T>
-    { };
+    {
+        constexpr T val() const;    // NOTE: declaration only.
+    };
 
     template <typename T>
     using id_t = typename id<T>::type;

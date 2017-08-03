@@ -410,3 +410,81 @@ TEST_CASE("foldl, foldr", "[prelude]")
         >::value == 2   // (1 - (2 - (3 - 0)))
     );
 }
+
+TEST_CASE("replicate", "[prelude]")
+{
+    // NOTE: this is a compiler error.
+    //          'error: lambda expression in an unevaluated operand'
+    //decltype([]{}()) * v;
+
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int>,
+            TL<int, int, int, int, int>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int *>,
+            TL<int *, int *, int *, int *, int *>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int &>,
+            TL<int &, int &, int &, int &, int &>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int &&>,
+            TL<int &&, int &&, int &&, int &&, int &&>
+        >
+    );
+
+    struct S { };
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, S>,
+            TL<S, S, S, S, S>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int S:: *>,
+            TL<int S:: *, int S:: *, int S:: *, int S:: *, int S:: *>
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, void>,
+            TL<void, void, void, void, void>
+        >
+    );
+
+    // NOTE: this is a compiler error:
+    //          'error: function cannot return function type 'void (int)'
+    //       need to support this?
+    /*
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, void(int)>,
+            TL<void(int), void(int), void(int), void(int), void(int)>
+        >
+    );
+    */
+
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, void (*) (int)>,
+            TL<void (*) (int), void (*) (int), void (*) (int), void (*) (int), void (*) (int)>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, void (&) (int)>,
+            TL<void (&) (int), void (&) (int), void (&) (int), void (&) (int), void (&) (int)>
+        >
+    );
+}

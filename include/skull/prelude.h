@@ -22,6 +22,7 @@
 #include "prelude/not.h"
 #include "prelude/take.h"
 #include "prelude/zip.h"
+#include "prelude/replicate.h"
 
 
 namespace skull::prelude
