@@ -31,6 +31,8 @@ namespace skull::prelude
                    );
         };
 
+        // NOTE: lambda expressions can't be used
+        //          in an unevaluated operand context directly.
         using type = decltype(l());
     };
 
