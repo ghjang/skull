@@ -54,6 +54,34 @@ namespace skull::prelude
               >
     { };
 
+    /**
+     * workaround to fix the compile error, 'function cannot return array type'.
+     */
+    template <typename T, T n, typename U>
+    struct replicate<std::integral_constant<T, n>, U[]>
+            : map<
+                    quote<std::remove_pointer>,
+                    replicate_t<
+                        std::integral_constant<T, n>,
+                        std::add_pointer_t<U[]>
+                    >
+              >
+    { };
+
+    /**
+     * workaround to fix the compile error, 'function cannot return array type'.
+     */
+    template <typename T, T n, typename U, T m>
+    struct replicate<std::integral_constant<T, n>, U[m]>
+            : map<
+                    quote<std::remove_pointer>,
+                    replicate_t<
+                        std::integral_constant<T, n>,
+                        std::add_pointer_t<U[m]>
+                    >
+              >
+    { };
+
     template <std::size_t n, typename x>
     using replicate_c = replicate<std::integral_constant<std::size_t, n>, x>;
 

@@ -463,6 +463,7 @@ TEST_CASE("replicate", "[prelude]")
         >
     );
 
+    // function
     static_assert(
         std::is_same_v<
             replicate_c_t<5, void(int)>,
@@ -479,6 +480,32 @@ TEST_CASE("replicate", "[prelude]")
         std::is_same_v<
             replicate_c_t<5, void (&) (int)>,
             TL<void (&) (int), void (&) (int), void (&) (int), void (&) (int), void (&) (int)>
+        >
+    );
+
+    // array
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int[]>,
+            TL<int[], int[], int[], int[], int[]>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int[5]>,
+            TL<int[5], int[5], int[5], int[5], int[5]>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int[][5]>,
+            TL<int[][5], int[][5], int[][5], int[][5], int[][5]>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            replicate_c_t<5, int[5][5]>,
+            TL<int[5][5], int[5][5], int[5][5], int[5][5], int[5][5]>
         >
     );
 }
