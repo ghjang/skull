@@ -463,18 +463,12 @@ TEST_CASE("replicate", "[prelude]")
         >
     );
 
-    // NOTE: this is a compiler error:
-    //          'error: function cannot return function type 'void (int)'
-    //       need to support this?
-    /*
     static_assert(
         std::is_same_v<
             replicate_c_t<5, void(int)>,
             TL<void(int), void(int), void(int), void(int), void(int)>
         >
     );
-    */
-
     static_assert(
         std::is_same_v<
             replicate_c_t<5, void (*) (int)>,

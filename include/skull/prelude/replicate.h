@@ -7,6 +7,7 @@
 
 #include "../base/type_list.h"
 #include "id.h"
+#include "map.h"
 
 
 namespace skull::prelude
@@ -15,6 +16,9 @@ namespace skull::prelude
 
     template <typename n, typename x>
     struct replicate;
+
+    template <typename n, typename x>
+    using replicate_t = typename replicate<n, x>::type;
 
     template <typename T, T n, typename x>
     struct replicate<std::integral_constant<T, n>, x>
@@ -36,8 +40,19 @@ namespace skull::prelude
         using type = decltype(l());
     };
 
-    template <typename n, typename x>
-    using replicate_t = typename replicate<n, x>::type;
+    /**
+     * workaround to fix the compile error, 'function cannot return function type'.
+     */
+    template <typename T, T n, typename R, typename... Args>
+    struct replicate<std::integral_constant<T, n>, R(Args...)>
+            : map<
+                    quote<std::remove_pointer>,
+                    replicate_t<
+                        std::integral_constant<T, n>,
+                        std::add_pointer_t<R(Args...)>
+                    >
+              >
+    { };
 
     template <std::size_t n, typename x>
     using replicate_c = replicate<std::integral_constant<std::size_t, n>, x>;
