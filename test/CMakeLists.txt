@@ -40,15 +40,15 @@ include_directories(${SKULL_ROOT})
 # build type
 set(CMAKE_BUILD_TYPE "Debug")
 
-# LLVM 4.0.0 base path
-set(LLVM_4_0_0_BASE "/Users/gilhojang/clang/clang+llvm-4.0.0-x86_64-apple-darwin")
+# LLVM 5.0.0 base path
+set(LLVM_5_0_0_BASE "/Users/gilhojang/clang/clang+llvm-5.0.0-x86_64-apple-darwin")
 
-set(CMAKE_C_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang")
-set(CMAKE_CXX_COMPILER  "${LLVM_4_0_0_BASE}/bin/clang++")
+set(CMAKE_C_COMPILER  "${LLVM_5_0_0_BASE}/bin/clang")
+set(CMAKE_CXX_COMPILER  "${LLVM_5_0_0_BASE}/bin/clang++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
-# NOTE: This is required to make the linker, ld, find the LLVM 4.0.0 libraries.
-link_directories(${LLVM_4_0_0_BASE}/lib)
+# NOTE: This is required to make the linker, ld, find the LLVM 5.0.0 libraries.
+link_directories(${LLVM_5_0_0_BASE}/lib)
 
 set(SOURCE_FILES
         skull_base_test.cpp
