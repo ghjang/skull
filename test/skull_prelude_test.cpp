@@ -673,7 +673,7 @@ TEST_CASE("maximum with C++17 template deduction guide", "[prelude]")
     //maximum('a', 10.0, 20, 30L);
 
     // But, this is OK.
-    // Yes, you can use the run-time-function-call-like syntax
+    // Yes, you can also use the run-time-function-call-like syntax
     // in function argument contexts.
     [](auto a) { /* ... */ }(maximum('a', 10.0, 20, 30L));
 }
