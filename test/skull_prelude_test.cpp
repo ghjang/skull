@@ -669,7 +669,7 @@ TEST_CASE("maximum with C++17 template deduction guide", "[prelude]")
 
     // (Unfortunately,) this is a compile error.
     // maximum is not a real function.
-    // The compiler can't deduce the parametes without some extra context information.
+    // The compiler can't deduce the parameters without some extra context information.
     //maximum('a', 10.0, 20, 30L);
 
     // But, this is OK.
