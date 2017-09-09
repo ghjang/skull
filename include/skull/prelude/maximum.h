@@ -23,12 +23,12 @@ namespace skull::prelude
         constexpr maximum() = default;
         
         template <typename U>
-        constexpr maximum(U...)   // discard all arguments
+        constexpr maximum(U &&...)   // discard all arguments
         { }
     };
 
     template <typename... T>
-    maximum(T &&...) -> maximum<TL<T...>>;
+    maximum(T &&...) -> maximum<TL<std::decay_t<T>...>>;
 
 #else
 
