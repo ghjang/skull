@@ -582,3 +582,44 @@ TEST_CASE("max", "[prelude]")
         >
     );
 }
+
+TEST_CASE("maximum", "[prelude]")
+{
+    static_assert(
+        std::is_same_v<
+                maximum_t<TL<char, double, int, long>>,
+                double
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                maximum_t<
+                    TL< // special case for a list comprised of integral constant types only.
+                        std::integral_constant<char, 8>,
+                        std::integral_constant<long long, 4>,
+                        std::integral_constant<int, 2>
+                    >
+                >,
+                std::integral_constant<
+                        long long,  // the largest integral common type is selected.
+                        8
+                > 
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+                maximum_t<
+                    TL<
+                        char,
+                        double,
+                        TL<>,
+                        std::integral_constant<std::size_t, 1>,
+                        int,
+                        long>
+                    >,
+                double
+        >
+    );
+}

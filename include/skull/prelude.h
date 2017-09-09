@@ -24,6 +24,7 @@
 #include "prelude/zip.h"
 #include "prelude/replicate.h"
 #include "prelude/max.h"
+#include "prelude/maximum.h"
 
 
 namespace skull::prelude
