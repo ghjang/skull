@@ -656,8 +656,8 @@ TEST_CASE("maximum with C++17 template deduction guide", "[prelude]")
     static_assert(std::is_same_v<decltype(m0), decltype(m1)>);
     static_assert(
         std::is_same_v<
-                double,
-                std::common_type_t<
+                double,                 // 'double' is the largest type
+                std::common_type_t<     // for "'a', 10.0, 20, 30L" values.
                         decltype(m0),
                         decltype(m1),
                         decltype(m2),
