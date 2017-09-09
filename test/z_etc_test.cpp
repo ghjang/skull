@@ -118,3 +118,26 @@ TEST_CASE("functor with skull", "[etc]")
         >
     );
 }
+
+
+#if __clang_major__ >= 5
+
+template <typename T>
+struct single_type_param
+{
+    single_type_param(T) { }
+};
+
+template <typename T>
+single_type_param(T) -> single_type_param<T>;
+
+TEST_CASE("C++17 template deduction guide", "[etc]")
+{
+    single_type_param s(5);
+
+    // compile errors
+    //single_type_param{ 5 };
+    //single_type_param(5);
+}
+
+#endif // __clang_major__ >= 5
