@@ -653,6 +653,7 @@ TEST_CASE("maximum with C++17 template deduction guide", "[prelude]")
               }('a', 10.0, 20, 30L);
 
     // 'm0, m1, m2, m3' are expected to have same type!!~ :)
+    static_assert(std::is_same_v<decltype(m0)::type, double>);
     static_assert(std::is_same_v<decltype(m0), decltype(m1)>);
     static_assert(
         std::is_same_v<
@@ -665,5 +666,14 @@ TEST_CASE("maximum with C++17 template deduction guide", "[prelude]")
                 >::type
         >
     );
+
+    // (Unfortunately,) this is a compile error.
+    // maximum is not a real function.
+    //maximum('a', 10.0, 20, 30L);
+
+    // But, this is OK.
+    // Yes, you can use the run-time-function-call-like syntax
+    // in function argument contexts.
+    [](auto a) { /* ... */ }(maximum('a', 10.0, 20, 30L));
 }
 #endif // __clang_major__ >= 5
