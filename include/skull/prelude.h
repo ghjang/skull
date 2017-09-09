@@ -23,6 +23,7 @@
 #include "prelude/take.h"
 #include "prelude/zip.h"
 #include "prelude/replicate.h"
+#include "prelude/max.h"
 
 
 namespace skull::prelude

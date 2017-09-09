@@ -509,3 +509,76 @@ TEST_CASE("replicate", "[prelude]")
         >
     );
 }
+
+TEST_CASE("max", "[prelude]")
+{
+    static_assert(
+        std::is_same_v<
+                max_t<int, double>,
+                double
+        >
+    );
+
+    if constexpr (sizeof(long long) == sizeof(double)) {
+        CHECK((
+            std::is_same_v<
+                    max_t<long long, double>,
+                    long long
+            >
+        ));
+    }
+    else if constexpr (sizeof(long long) > sizeof(double)) {
+        CHECK((
+            std::is_same_v<
+                    max_t<long long, double>,
+                    long long
+            >
+        ));
+    }
+    else {
+        CHECK((
+            std::is_same_v<
+                    max_t<long long, double>,
+                    double
+            >
+        ));
+    }
+
+    static_assert(
+        std::is_same_v<
+            max_t<
+                std::integral_constant<int, 4>,
+                std::integral_constant<int, 8>
+                >,
+            std::integral_constant<int, 8>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            max_t<
+                std::integral_constant<int, 8>,
+                std::integral_constant<int, 4>
+                >,
+            std::integral_constant<int, 8>
+        >
+    );
+    static_assert(
+        std::is_same_v<
+            max_t<
+                std::integral_constant<int, 8>,
+                std::integral_constant<int, 8>
+                >,
+            std::integral_constant<int, 8>
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
+            max_t<
+                std::integral_constant<char, 16>,
+                std::integral_constant<int, 8>
+                >,
+            std::integral_constant<int, 16>
+        >
+    );
+}
