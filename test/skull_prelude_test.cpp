@@ -587,6 +587,13 @@ TEST_CASE("maximum", "[prelude]")
 {
     static_assert(
         std::is_same_v<
+                maximum_t<TL<>>,
+                TL<>
+        >
+    );
+
+    static_assert(
+        std::is_same_v<
                 maximum_t<TL<char, double, int, long>>,
                 double
         >
