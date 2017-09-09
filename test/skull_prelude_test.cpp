@@ -630,3 +630,40 @@ TEST_CASE("maximum", "[prelude]")
         >
     );
 }
+
+#if __clang_major__ >= 5
+TEST_CASE("maximum with C++17 template deduction guide", "[prelude]")
+{
+    // Here, the type parameter for maximum metafunction is automatically deduced!!
+    maximum m0('a', 10.0, 20, 30L);
+
+    // This is OK to compile.
+    // It looks like a run-time functon call!!~ :)
+    auto m1 = maximum('a', 10.0, 20, 30L);
+    
+    // This is also OK to compile
+    // because it is actually a metafunction which is a struct.
+    auto m2 = maximum{ 'a', 10.0, 20, 30L };
+
+    // Above codes have somewhat semantically similar to the following:
+    auto m3 = [](auto... xs) {
+                    return maximum<
+                                TL<decltype(xs)...>
+                           >{};
+              }('a', 10.0, 20, 30L);
+
+    // 'm0, m1, m2, m3' are expected to have same type!!~ :)
+    static_assert(std::is_same_v<decltype(m0), decltype(m1)>);
+    static_assert(
+        std::is_same_v<
+                double,
+                std::common_type_t<
+                        decltype(m0),
+                        decltype(m1),
+                        decltype(m2),
+                        decltype(m3)
+                >::type
+        >
+    );
+}
+#endif // __clang_major__ >= 5
