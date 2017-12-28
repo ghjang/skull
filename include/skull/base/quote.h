@@ -6,7 +6,7 @@ namespace skull::base
 {
     /**
      * quote itself is a helper metafunction class
-     * which turns metafunction into metafunction classe.
+     * which turns metafunction into metafunction class.
      *
      * @tparam f metafunction
      */
