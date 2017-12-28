@@ -54,6 +54,7 @@ set(SOURCE_FILES
         skull_base_test.cpp
         skull_prelude_test.cpp
         skull_app_test.cpp
+        skull_aux_test.cpp
         z_etc_test.cpp
         example/00_make_variant_array.cpp
         example/01_make_tuple.cpp
