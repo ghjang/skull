@@ -41,6 +41,18 @@ namespace skull::aux
 
     template <typename T>
     inline constexpr auto is_basic_output_streamable_v = is_basic_output_streamable_<T>::value;
+
+
+    template <typename T, typename = void>
+    struct is_output_streamable_ : std::false_type
+    { };
+
+    template <typename T>
+    struct is_output_streamable_<T, std::void_t<decltype(std::declval<std::ostream>() << std::declval<T>())>> : std::true_type
+    { };
+
+    template <typename T>
+    inline constexpr auto is_output_streamable_v = is_output_streamable_<T>::value;
 } // namespace skull::aux
 
 
